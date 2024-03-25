@@ -7,8 +7,7 @@ import {
   Text,
   useColorScheme
 } from 'react-native';
-
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -22,7 +21,9 @@ function App(): React.JSX.Element {
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       />
-      <Text style={{fontFamily:'LeagueSpartan-VariableFont_wght'}}>Hola mundo</Text>
+      <Text style={{fontWeight:'bold',fontFamily:'LeagueSpartan-VariableFont_wght'}}>Hola mundo</Text>
+      <Icon name="cog" color={'red'} size={12} />
+
     </SafeAreaView>
   );
 }
