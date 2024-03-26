@@ -3,6 +3,7 @@ const RouteNames = {
   SCREEN_SETTINGS: 'Settings',
   SCREEN_CART: 'Cart',
   SCREEN_LOGIN: 'Login',
+  SCREEN_DETAIL: 'Detail',
 };
 
 export default RouteNames;

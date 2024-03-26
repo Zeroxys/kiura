@@ -9,6 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Theme from '../../theme';
+import {useNavigation} from '@react-navigation/native';
+import RouteNames from '../../utils/routeNames';
 
 interface Product {
   id: number;
@@ -34,9 +36,14 @@ const ProductsListComponent: React.FC<ProductsListComponentProps> = ({
   title,
   products,
 }) => {
+  const {navigate} = useNavigation();
   const filteredProducts = category
     ? products?.filter(product => product.category === category)
     : products;
+
+  const goToDetail = (product: Product) => {
+    navigate(RouteNames.SCREEN_DETAIL, product);
+  };
 
   return (
     <View style={{marginBottom: 50}}>
@@ -47,7 +54,10 @@ const ProductsListComponent: React.FC<ProductsListComponentProps> = ({
             <ActivityIndicator color={Theme.colors.cyan.base} />
           ) : (
             filteredProducts?.map((product, index) => (
-              <TouchableOpacity key={index} style={styles.productCard}>
+              <TouchableOpacity
+                onPress={() => goToDetail(product)}
+                key={index}
+                style={styles.productCard}>
                 <Image
                   source={{uri: product.thumbnail}}
                   style={styles.productImage}

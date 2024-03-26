@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeBottomTabs from './HomeBottomTabs';
 import RouteNames from '../utils/routeNames';
+import ProductDetailScreen from '../screens/ProductDetailt';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,12 @@ const LoginStack = () => {
             options={{headerShown: false}}
           />
         )}
+
+        <Stack.Screen
+          name={RouteNames.SCREEN_DETAIL}
+          component={ProductDetailScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

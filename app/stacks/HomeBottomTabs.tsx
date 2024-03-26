@@ -22,7 +22,7 @@ const HomeBottomTabs = () => {
   return (
     <View style={styles.container}>
       <Tab.Navigator
-        initialRouteName={RouteNames.SCREEN_SETTINGS}
+        initialRouteName={'HomeScreen'}
         screenOptions={{
           tabBarShowLabel: false,
           tabBarInactiveTintColor: Theme.colors.blue.base,
@@ -37,7 +37,7 @@ const HomeBottomTabs = () => {
               <Icon name="home" color={color} size={size} />
             ),
           }}
-          name={RouteNames.SCREEN_HOME}
+          name={'HomeScreen'}
           component={HomeScreen}
         />
 
