@@ -17,7 +17,7 @@ const reduxPersistActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['login'],
+  blacklist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -11,6 +11,16 @@ import Header from '../components/header/Index';
 import Theme from '../theme';
 import {RouteProp} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {addProductAction} from '../redux/actions/productActions';
+import {useDispatch} from 'react-redux';
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  quantity: number;
+  thumbnail: string;
+}
 
 type ProductDetailRouteParams = {
   ProductDetail: {
@@ -30,6 +40,7 @@ type ProductDetailRouteParams = {
 const ProductDetailScreen: React.FC<{
   route: RouteProp<ProductDetailRouteParams, 'ProductDetail'>;
 }> = ({route}) => {
+  const dispatch = useDispatch();
   const {title, description, price, brand, thumbnail} = route.params;
   const maxTitleLength = 20;
 
@@ -39,8 +50,8 @@ const ProductDetailScreen: React.FC<{
       : title;
 
   const handleAddToCart = () => {
-    //TODO ADD REDUX
-    console.log('REDUX');
+    console.log(route.params);
+    dispatch(addProductAction([route.params]));
   };
 
   return (

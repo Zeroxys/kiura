@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   SafeAreaView,
@@ -6,28 +6,57 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import Header from '../components/header/Index';
 import Theme from '../theme';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {SvgXml} from 'react-native-svg';
+import {useDispatch, useSelector} from 'react-redux';
 import {emtpyCart} from '../assets/images/emptyCard';
+import {removeProductAction} from '../redux/actions/productActions';
+import CartItem from '../components/cardItem';
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  quantity: number;
+  thumbnail: string;
+}
 
 const CartScreen: React.FC = () => {
-  const [cartItems, setCartItems] = useState<Product[]>([
-    {id: 1, title: 'Producto 1', price: 10, quantity: 1},
-    {id: 2, title: 'Producto 2', price: 20, quantity: 2},
-    {id: 3, title: 'Producto 3', price: 15, quantity: 3},
-    {id: 4, title: 'Producto 1', price: 10, quantity: 1},
-    {id: 5, title: 'Producto 2', price: 20, quantity: 2},
-    {id: 6, title: 'Producto 3', price: 15, quantity: 3},
-    {id: 7, title: 'Producto 1', price: 10, quantity: 1},
-    {id: 8, title: 'Producto 2', price: 20, quantity: 2},
-    {id: 9, title: 'Producto 3', price: 15, quantity: 3},
-  ]);
+  const {cart} = useSelector(state => state.product);
+  const dispatch = useDispatch();
+
+  const [cartItems, setCartItems] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const updatedCartItems: Product[] = [];
+    cart.forEach(cartProduct => {
+      const existingCartItemIndex = updatedCartItems.findIndex(
+        item => item.title === cartProduct.title,
+      );
+      if (existingCartItemIndex !== -1) {
+        updatedCartItems[existingCartItemIndex].quantity += 1;
+      } else {
+        updatedCartItems.push({
+          id: cartProduct.id,
+          title: cartProduct.title,
+          price: cartProduct.price,
+          quantity: 1,
+          thumbnail: cartProduct.thumbnail,
+        });
+      }
+    });
+    setCartItems(updatedCartItems);
+  }, [cart]);
 
   const removeFromCart = (productId: number) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+    const updateCart = cart.filter(product => {
+      return product.id !== productId;
+    });
+    dispatch(removeProductAction(updateCart));
   };
 
   const incrementQuantity = (productId: number) => {
@@ -39,20 +68,23 @@ const CartScreen: React.FC = () => {
   };
 
   const renderItem = ({item}: {item: Product}) => (
-    <View style={styles.cartItem}>
-      <Text>{item.title}</Text>
-      <Text>${item.price}</Text>
-      <Text>Cantidad: {item.quantity}</Text>
-      <TouchableOpacity onPress={() => removeFromCart(item.id)}>
-        <Icon name="trash" size={20} color="red" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => incrementQuantity(item.id)}>
-        <Text>
-          <Icon name="plus" size={20} color="green" />
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <CartItem
+      item={item}
+      removeFromCart={removeFromCart}
+      decrementQuantity={decrementQuantity}
+      incrementQuantity={incrementQuantity}
+    />
   );
+
+  const decrementQuantity = (productId: number) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === productId && item.quantity > 0
+          ? {...item, quantity: item.quantity - 1}
+          : item,
+      ),
+    );
+  };
 
   const calculateTotal = () => {
     return cartItems.reduce(
@@ -100,18 +132,9 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.white.base,
     paddingHorizontal: 25,
   },
-  cartItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    height: 80,
-    borderBottomColor: Theme.colors.gray.light,
-  },
   totalContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 20,
   },
   totalText: {
     fontSize: 20,
@@ -141,12 +164,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  quantity: number;
-}
 
 export default CartScreen;

@@ -7,7 +7,7 @@ const productReducer = (state = initialState, action) => {
     case 'ADD_PRODUCT':
       return {
         ...state,
-        cart: action.payload,
+        cart: [...state.cart, ...action.payload],
       };
     case 'REMOVE_PRODUCT':
       return {

@@ -1,16 +1,20 @@
 const initialState = {
-  persistLogin: 'LoginAccount',
+  persistLogin: false,
+  username: '',
 };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_SCREEN_OPTION':
+    case 'SET_PERSIST_LOGIN':
       return {
         ...state,
         persistLogin: action.payload,
       };
-    case 'LOGIN_RESET':
-      return {...initialState};
+    case 'SET_USERNAME':
+      return {
+        ...state,
+        username: action.payload,
+      };
     default:
       return state;
   }

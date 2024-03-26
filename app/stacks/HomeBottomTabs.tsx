@@ -1,10 +1,10 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useSelector} from 'react-redux';
 import Theme from '../theme/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import RouteNames from '../utils/routeNames';
-import {useNavigation} from '@react-navigation/native';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -17,7 +17,20 @@ const tabBarStyle = {
 
 const Tab = createBottomTabNavigator();
 const HomeBottomTabs = () => {
-  const {navigate} = useNavigation();
+  const {cart} = useSelector(state => state.product);
+
+  console.log(cart);
+
+  const renderCartIcon = ({color, size}) => (
+    <View>
+      <Icon name="shopping-cart" color={color} size={size} />
+      {cart.length > 0 && (
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{cart.length}</Text>
+        </View>
+      )}
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -44,9 +57,7 @@ const HomeBottomTabs = () => {
         <Tab.Screen
           options={{
             headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="shopping-cart" color={color} size={size} />
-            ),
+            tabBarIcon: renderCartIcon,
           }}
           name={RouteNames.SCREEN_CART}
           component={CartScreen}
@@ -79,6 +90,22 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 10, height: 10},
     shadowOpacity: 0.5,
     shadowRadius: 6,
+  },
+  badge: {
+    position: 'absolute',
+    top: -8,
+    right: -12,
+    backgroundColor: Theme.colors.green.base,
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
 

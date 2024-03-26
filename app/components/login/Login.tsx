@@ -5,34 +5,37 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  Switch,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Theme from '../../theme/index';
 import {ActivityIndicator} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import CustomInput from '../customInput';
-import RouteNames from '../../utils/routeNames';
+import {useDispatch} from 'react-redux';
+import {
+  persistLoginAction,
+  setUsernameAction,
+} from '../../redux/actions/loginActions';
 
 const LoginAccount = () => {
-  const {navigate} = useNavigation();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = async () => {
-    navigate(RouteNames.SCREEN_HOME)
+    if (username.length > 0) {
+      dispatch(persistLoginAction(true));
+      dispatch(setUsernameAction(username));
+    }
   };
 
   return (
     <View style={styles.inputContainer}>
-
       <Text style={styles.title}>Iniciar sesión</Text>
 
       <CustomInput
         icon={'user'}
-        placeholder={"Nombre de usuario"}
+        placeholder={'Nombre de usuario'}
         value={username}
         onChangeText={text => setUsername(text)}
       />
@@ -57,20 +60,6 @@ const LoginAccount = () => {
         />
       </View>
 
-      <View style={styles.switchWrapper}>
-        <Switch
-          trackColor={{
-            true: Theme.colors.blue.base,
-          }}
-          onValueChange={value => setRememberMe(value)}
-          value={rememberMe}
-        />
-        <Text
-          style={styles.rememberMe}>
-            Recordarme
-        </Text>
-      </View>
-
       <View
         style={{
           justifyContent: 'space-between',
@@ -79,9 +68,7 @@ const LoginAccount = () => {
           {false ? (
             <ActivityIndicator size="small" color={Theme.colors.white.base} />
           ) : (
-            <Text style={styles.loginButtonText}>
-              Login
-            </Text>
+            <Text style={styles.loginButtonText}>Login</Text>
           )}
         </TouchableOpacity>
       </View>
@@ -164,11 +151,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-  rememberMe : {
+  rememberMe: {
     marginLeft: 10,
     color: Theme.colors.blue.base,
     marginRight: 10,
-  }
+  },
 });
 
 export default LoginAccount;

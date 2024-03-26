@@ -1,22 +1,22 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
   Keyboard,
   TouchableWithoutFeedback,
   StyleSheet,
-} from 'react-native'
-import Theme from '../theme/index'
-import {SvgXml} from 'react-native-svg'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {SafeAreaView} from 'react-native'
-import { logoFurni } from '../assets/images/logoFurniPro';
-import LoginAccount from '../components/login/Login'
+} from 'react-native';
+import Theme from '../theme/index';
+import {SvgXml} from 'react-native-svg';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SafeAreaView} from 'react-native';
+import {logoFurni} from '../assets/images/logoFurniPro';
+import LoginAccount from '../components/login/Login';
 
 const LoginScreen = () => {
   const handleInputBlur = () => {
-    Keyboard.dismiss()
-  }
+    Keyboard.dismiss();
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -44,12 +44,10 @@ const LoginScreen = () => {
                   alignItems: 'center',
                   flexDirection: 'column',
                 }}>
-                  <View style={{justifyContent:'center', alignItems:'center'}}>
-                    <SvgXml xml={logoFurni} width={180} height={180} />
-                    <Text style={styles.appTitle}>
-                      FurniPro
-                    </Text>
-                  </View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <SvgXml xml={logoFurni} width={180} height={180} />
+                  <Text style={styles.appTitle}>FurniPro</Text>
+                </View>
                 <View style={styles.containerLogin}>
                   <LoginAccount />
                 </View>
@@ -59,8 +57,8 @@ const LoginScreen = () => {
         </KeyboardAwareScrollView>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   safeArea: {flex: 1, backgroundColor: Theme.colors.blue.base},
@@ -169,5 +167,4 @@ const styles = StyleSheet.create({
 
 export {styles};
 
-
-export default LoginScreen
+export default LoginScreen;
