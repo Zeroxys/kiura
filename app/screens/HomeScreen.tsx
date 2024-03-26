@@ -20,7 +20,7 @@ interface Product {
   thumbnail: string;
 }
 
-const CalendarScreen: React.FC = () => {
+const HomeScreen: React.FC = () => {
   const [search, setSearchValue] = useState<string>('');
   const [searchedProduct, setSearchedProduct] = useState<Product[] | null>(
     null,
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalendarScreen;
+export default HomeScreen;
