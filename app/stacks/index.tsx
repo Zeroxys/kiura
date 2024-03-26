@@ -8,8 +8,7 @@ import RouteNames from '../utils/routeNames';
 const Stack = createNativeStackNavigator();
 
 const LoginStack = () => {
-  
-  const userLogged = false
+  const userLogged = false;
 
   return (
     <NavigationContainer>

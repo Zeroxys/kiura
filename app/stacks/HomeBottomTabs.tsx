@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {StyleSheet, View} from 'react-native'
 import RouteNames from '../utils/routeNames'
 import {useNavigation} from '@react-navigation/native'
-import HomeScreen from '../screens/Home'
+import HomeScreen from '../screens/HomeScreen'
 
 const tabBarStyle = {
   tabBarShowLabel: false,
