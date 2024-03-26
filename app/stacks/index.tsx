@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 
 const LoginStack = () => {
   
-  const userLogged = true
+  const userLogged = false
 
   return (
     <NavigationContainer>
