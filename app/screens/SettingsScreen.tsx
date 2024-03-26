@@ -11,7 +11,7 @@ import Header from '../components/header/Index';
 import Theme from '../theme';
 import {useDispatch, useSelector} from 'react-redux';
 import {profile} from '../assets/images/profile';
-import {persistLoginAction} from '../redux/actions/loginActions'; // Importa la acción para cerrar sesión
+import {persistLoginAction} from '../redux/actions/loginActions';
 
 const SettingsScreen: React.FC = () => {
   const {username, persistLogin} = useSelector(store => store.login);
@@ -26,7 +26,6 @@ const SettingsScreen: React.FC = () => {
       <Header title="Settings" />
       <View style={styles.container}>
         <SvgXml xml={profile} width={260} height={260} />
-        <Text style={styles.username}>{username}</Text>
         <Text style={styles.greeting}>Hola, {username}!</Text>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
@@ -56,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 20,
   },
   logoutButton: {
     backgroundColor: Theme.colors.blue.base,

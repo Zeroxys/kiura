@@ -11,3 +11,10 @@ export const removeProductAction = product => {
     payload: product,
   };
 };
+
+export const cleanProductsAction = () => {
+  return {
+    type: 'CLEAN_PRODUCTS',
+    payload: [],
+  };
+};

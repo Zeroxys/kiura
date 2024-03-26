@@ -6,15 +6,18 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  Image,
+  Alert,
 } from 'react-native';
 import Header from '../components/header/Index';
 import Theme from '../theme';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {SvgXml} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {emtpyCart} from '../assets/images/emptyCard';
-import {removeProductAction} from '../redux/actions/productActions';
+import {
+  addProductAction,
+  cleanProductsAction,
+  removeProductAction,
+} from '../redux/actions/productActions';
 import CartItem from '../components/cardItem';
 
 interface Product {
@@ -93,6 +96,21 @@ const CartScreen: React.FC = () => {
     );
   };
 
+  const handleBuy = () => {
+    Alert.alert(
+      'Compra exitosa',
+      'El proceso de compra ha sido concluido satisfactoriamente.',
+      [
+        {
+          text: 'Aceptar',
+          onPress: () => {
+            dispatch(cleanProductsAction());
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Header title="Carrito" />
@@ -111,7 +129,7 @@ const CartScreen: React.FC = () => {
             />
             <View style={styles.totalContainer}>
               <Text style={styles.totalText}>Total: ${calculateTotal()}</Text>
-              <TouchableOpacity style={styles.buyButton}>
+              <TouchableOpacity style={styles.buyButton} onPress={handleBuy}>
                 <Text style={styles.buyButtonText}>Comprar</Text>
               </TouchableOpacity>
             </View>
